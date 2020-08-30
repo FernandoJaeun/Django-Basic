@@ -10,6 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+# 프로젝트의 전반적인 사항들을 설정해주는 곳!
+#  프로젝트 == 웹 사이트 자체 ex) 내 프로젝트는 네이버를 만드는 것.
+# 루트 디렉토리를 포함한 각종 디렉토리의 위치,
+# 로그의 형식
+# 프로젝트에 포함된 애플리케이션의 이름 등등이 지정되어 있음.
+
+
+# 프로젝트에 여러 애플리케이션을 만들고, 최종적으로 배포하기 위해 설정하는 절차는
+# 1. ALLOWED_HOSTS 항목 지정.
+# 2. INSTALLED_APPS에 프로젝트 내 모든 애플리케이션 등록.
+# 3. DATABASES 프로젝트에 사용할 데이터베이스 엔진 지정! default는 SQLite.
+# 4. TIME_ZONE 지정. 최초에는 세계표준시(UTC)로 설정되어 있음.
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,13 +35,21 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = '3pav1+c#i^$l5tffh5e5k2$-e#t4o1b18z+0-d-0^-^t4=+$-o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG가 True일 경우 == 개발 모드
+# DEBUG가 False일 경우 == 운영 모드
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# 운영 모드인 경우 ALLOWED_HOSTS를 반드시 서버의 IP나 도메인을 지정해야 하고,
+# 개발 모드인 경우에는 값을 지정하지 않아도 ['localhlost','127.0.01']로 간주합니다.
+# 장고의 runserver를 기동할 서버의 IP가 127.0.0.1 뿐만 아니라 192.168.56.101일 수도 있다면 아래와 같이 지정합니다.
+# *원래 값은 ALLOWED_HOSTS = [] 였음
+ALLOWED_HOSTS = ['192.168.56.101','localhost','127.0.0.1']
 
 
 # Application definition
 
+
+# 두번 째
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'polls.apps.PollsConfig',
 ]
 
 MIDDLEWARE = [
@@ -105,7 +126,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# default == TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
