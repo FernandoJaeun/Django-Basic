@@ -1,3 +1,4 @@
+import os
 """
 Django settings for mysite project.
 
@@ -75,7 +76,7 @@ ROOT_URLCONF = 'ch3.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
