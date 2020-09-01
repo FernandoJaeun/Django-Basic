@@ -9,9 +9,13 @@ from .models import Question
 
 
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'polls/index.html', context)
+    latest_question_list = Question.objects.order_by('pub_date')[:5]   # 날짜 기준 오름차순, 5개의 최근 Question 객체를 저장
+    template = loader.get_template('polls/index.html')
+    context = {
+        'latest_question_list': latest_question_list,
+    }
+    return render(request, 'polls/index.html', context) # 템플릿 이름 지정, 보낼 내용(선택) 지정
+# Leave the rest of the views (detail, results, vote) unchanged
 
 
 def detail(request, question_id):
