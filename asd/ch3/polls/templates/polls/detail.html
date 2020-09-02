@@ -1,6 +1,15 @@
-<h1>{{ question.question_text }}</h1>
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }}</li>
-{% endfor %}
-</ul>
+<h1>{{ question.question_text }}</h1> <!-- Header 질문을 제목으로 사용-->
+
+{% if error_message %}<p><strong>{{error_message}}</strong></p>{% end if %}
+<!-- 에러시 에러 띄움-->
+
+<form action="{% url 'polls:vote' question.id %}" method="POST">
+    <!-- URLConf, app_name = polls에서 name='vote' 를 가리킴-->
+    {% csrf_token %}
+    <!--보안 토큰-->
+    {% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}" />
+    <label for="choice{{forloop.counter}}">{{ choice.choice_text}}</label><br />
+    {% endfor %}
+    <input type = "sumbit" value="Vote" />
+</form>
