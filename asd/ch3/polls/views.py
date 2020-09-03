@@ -1,11 +1,9 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import Http404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import URLResolver, path, register_converter, reverse
-from .models import Question
-
 from django.template import loader
-from django.shortcuts import get_object_or_404, render
+from .models import Choice, Question
+
 
 
 def index(request):
@@ -21,8 +19,9 @@ def index(request):
 
 
 def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)  # 두번째 인자 조건이 성립하지 않으면 Http404 익셉션 발생
-    return render(request, 'polls/detail.html', {'question' : question})
+    # 두번째 인자 조건이 성립하지 않으면 Http404 익셉션 발생
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/detail.html', {'question': question})
 
 
 def results(request, question_id):
@@ -30,13 +29,15 @@ def results(request, question_id):
     return HttpResponse(response % question_id)
 
 
-def vote(request, question_id):\
-    question = get_object_or_404(Question, pk = question_id)
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
     try:
-        selected_chocie = question.choice_set.get(pk = request.POST['choice'])
-    except(KeyError, chocie.DoesNotExist):
-        'question' : question,
-        'error_message' : "You didin't select a choice"
-    })
-        
-
+        selected_chocie = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        return render(request, 'polls/detail.html', {
+        'question': question,
+        'error_message': "You didin't select a choice"
+        })
+    else:
+        selected_chocie.votes += 1
+        selected_chocie.sava()
