@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.urls import URLResolver, path, register_converter, reverse
-from django.template import loader
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import URLResolver,  reverse   # url 처리를 위한 reverse 
 from .models import Choice, Question
+from django.template import loader
 
 
 
@@ -20,7 +20,7 @@ def index(request):
 
 def detail(request, question_id):
     # 두번째 인자 조건이 성립하지 않으면 Http404 익셉션 발생
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Question, pk=question_id)    # 단축함수 : ShortCut
     return render(request, 'polls/detail.html', {'question': question})
     # render(request : 응답을 받아야 이 함수가 생성되고, 사용된다.
     #        template_name : request와 함께 필수 파라미터. 화면에 내용을 뿌려야하니까 뿌릴 화면을 지정해줘야지?
@@ -28,14 +28,14 @@ def detail(request, question_id):
 
 
 def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+    question = get_object_or_404(Question, pk=question_id)    # 단축함수 : ShortCut
+    return render(request, 'polls/results.html', {'question': question})
 
 
 def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Question, pk=question_id)  # Question 모델에서 question_id 인덱스에 해당하는 값이 있으면 반환하고, 없으면 404 에러를 반환
     try:
-        selected_chocie = question.choice_set.get(pk=request.POST['choice'])
+        selected_chocie = question.choice_set.get(pk=request.POST['choice'])    
     except (KeyError, Choice.DoesNotExist):
         return render(request, 'polls/detail.html', {
         'question': question,
@@ -43,4 +43,5 @@ def vote(request, question_id):
         })
     else:
         selected_chocie.votes += 1
-        selected_chocie.sava()
+        selected_chocie.save()
+    return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
