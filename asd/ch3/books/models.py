@@ -3,8 +3,9 @@ from django.db import models
 class Book(models.Model):
     title = models.CharField(max_length=100)
     authors = models.ManyToManyField('Author')  # 다대 다 관계처리
-    # 외래키가 바라보는 값이 삭제될 때 외래키 필드를 포함하는 모델 인스턴스(row)도 같이 삭제한다.
-    Publisher = models.ForeignKey('publisher', on_delete=models.CASCADE)
+    Publisher = models.ForeignKey('publisher', on_delete=models.CASCADE)    # 1대 다 관계처리
+    # 외래키가 바라보는 값이 삭제될 때 외래키 필드를 포함하는 모델 인스턴스(row)도 같이 삭제한다. 필수!
+
     publication_date = models.DateField()
 
     def __str__(self):
