@@ -3,13 +3,10 @@
 
 
 {% block content %}
-    <h2>Book List</h2>
-    <ul>
-        {% for book in object_list %}
-            <li><a href = "{% url 'books:book_detail' book.id %}"{{ book.title }}></a></li>
-        {% endfor %}
-    </ul>
+    <h1>{{ object.title }}</h1>
+    <p>{{ object.salutation }}</p>
+    <lit>Email: {{ object.email }}</lit>
 {% endblock content %}
-
+    
 <!--부모 템플릿인 base_site.html을 상속받아서 block content 부분만 재정의 했고, 
     나머지는 base_site.html의 내용을 그대로 사용한다. -->
