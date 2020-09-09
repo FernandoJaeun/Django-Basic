@@ -1,5 +1,5 @@
-{# base_book.html을 상속받겠다#}
-{% extends "base_book.html" %}
+{# base_books.html을 상속받겠다#}
+{% extends "base_books.html" %}
 
 
 {% block content %}
@@ -12,7 +12,7 @@
         {% endfor %}
     </li>
 
-    <li>Publisher: {{ object.pbulisher}}</li>
+    <li>Publisher: {{ object.publisher}}</li>
     <li>publication date: {{ object.publication_date }}</li>    
 {% endblock content %}
 

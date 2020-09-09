@@ -13,7 +13,7 @@ from .models import Book, Author, Publisher
 # books 어플리케이션의 첫 화면을 보여주는 구간
 
 class BooksModelView(TemplateView):
-    template_name = 'books/indes.html'  # 클래스 변수를  overriding해서 필수 지정
+    template_name = 'books/index.html'  # 클래스 변수를  overriding해서 필수 지정
 
     # 템플릿 시스템으로 넘겨줄 context 변수가 있는 경우 이 메스드를 overriding
     def get_context_data(self, **kwargs):

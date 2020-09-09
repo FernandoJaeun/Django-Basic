@@ -1,16 +1,16 @@
-{# base_book.html을 상속받겠다#}
-{% extends "base_book.html" %}
+{# base_books.html을 상속받겠다#}
+{% extends "base_books.html" %}
 
 
 {% block content %}
-    <h2>Books Management System</h2>
-    <ul>
-        {% for modelname in model_list %}
-{% with "books:"|add:modelname|lower|add:"_list" as urlvar %}
-            <li><a href="{% url urlvar%}">{{modelname}}</a></li>
-{% endwith %}
-        {% endfor %}
-    </ul>
+<h2>Books Management System</h2>
+<ul>
+    {% for modelname in model_list %}
+    {% with "books:"|add:modelname|lower|add:"_list" as urlvar %}
+    <li><a href="{% url urlvar%}">{{modelname}}</a></li>
+    {% endwith %}
+    {% endfor %}
+</ul>
 {% endblock content %}
 
 <!--부모 템플릿인 base_site.html을 상속받아서 block content 부분만 재정의 했고, 

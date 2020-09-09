@@ -1,12 +1,12 @@
-{# base_book.html을 상속받겠다#}
-{% extends "base_book.html" %}
+{# base_books.html을 상속받겠다#}
+{% extends "base_books.html" %}
 
 
 {% block content %}
     <h2>Publisher List</h2>
     <ul>
         {% for publisher in object_list %}
-            <li><a href = "{% url 'books:publisher_detail' publisher.id %}"{{ publisher.title }}></a></li>
+            <li><a href = "{% url 'books:publisher_detail' publisher.id %}">{{ publisher.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock content %}

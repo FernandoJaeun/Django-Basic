@@ -1,9 +1,9 @@
-{# base_book.html을 상속받겠다#}
-{% extends "base_book.html" %}
+{# base_books.html을 상속받겠다#}
+{% extends "base_books.html" %}
 
 
 {% block content %}
-    <h1>{{ object.title }}</h1>
+    <h1>{{ object.name }}</h1>
     <p>{{ object.website }}</p>>
     <li>Address: {{ object.address }}</li>
 {% endblock content %}
