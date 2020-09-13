@@ -1,28 +1,32 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import URLResolver,  reverse   # url 처리를 위한 reverse 
+from django.urls import URLResolver,  reverse   # url 처리를 위한 reverse
 from django.template import loader
 
-from django.views import generic # 클래스형 뷰 제네릭 호출~
+from django.views import generic  # 클래스형 뷰 제네릭 호출~
 from .models import Choice, Question
+import logging
+logger = logging.getLogger(__name__)
 
 
-#--- Class-Based GenericView
+# --- Class-Based GenericViewF
 class IndexView(generic.ListView):
-    template_name = 'polls/index.html' # 템플릿 파일명 지정
-    context_object_name = 'latest_question_list'    
-    def get_queryset(self): 
+    template_name = 'polls/index.html'  # 템플릿 파일명 지정
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
         "최근 생성된 질문 5개를 반환함"
         return Question.objects.order_by('-pub_date')[:5]
-    
+
+
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
+
 class ResultView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
-
 
 
 # def index(request):
@@ -52,13 +56,17 @@ class ResultView(generic.DetailView):
 
 
 def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)  # Question 모델에서 question_id 인덱스에 해당하는 값이 있으면 반환하고, 없으면 404 에러를 반환
+    logger.debug("vote().question_id:%s" % question_id)
+    question = get_object_or_404(Question, pk=question_id)
+
+    # Question 모델에서 question_id 인덱스에 해당하는 값이 있으면 반환하고, 없으면 404 에러를 반환
+    question = get_object_or_404(Question, pk=question_id)
     try:
-        selected_chocie = question.choice_set.get(pk=request.POST['choice'])    
+        selected_chocie = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         return render(request, 'polls/detail.html', {
-        'question': question,
-        'error_message': "You didin't select a choice"
+            'question': question,
+            'error_message': "You didin't select a choice"
         })
     else:
         selected_chocie.votes += 1

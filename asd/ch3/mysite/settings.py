@@ -26,7 +26,7 @@ SECRET_KEY = 'mf0_nh4!xxs#6n4t1gee8ser+lkuzh!n1@tj%7*c0gj243atc#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.0.6']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.6']
 
 # Application definition
 
@@ -50,6 +50,33 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# 장고의 디폴트 설정을 유지하면서 로깅 설정함
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'mysite.log'),
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'polls': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        }
+    }
+}
+
 
 ROOT_URLCONF = 'mysite.urls'
 
