@@ -26,8 +26,9 @@ SECRET_KEY = 'mf0_nh4!xxs#6n4t1gee8ser+lkuzh!n1@tj%7*c0gj243atc#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.6']
-
+ALLOWED_HOSTS = ['leejaeyun.pythonanywhere.com', '127.0.0.1', '192.168.0.6']
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'www_dir', 'static')
 # Application definition
 
 INSTALLED_APPS = [
